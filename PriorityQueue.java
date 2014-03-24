@@ -1,6 +1,6 @@
 
 public class PriorityQueue<E> implements QueueADT<E>
-{
+{      
 
 	public boolean isEmpty() 
 	{
