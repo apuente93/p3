@@ -22,17 +22,22 @@ import java.util.Comparator;
  * @author Alejandro Puente
  */
 public class PriorityQueue<E> implements QueueADT<E>
-{      
-	
+{   
+	//Variable that holds the ComparableTask object that is used to prioritize
+	//tasks
+	private ComparableTask<E> comparator;
+	//Variable that holds the max capacity of the priority queue
+	private int maxCapacity;
 	/**
 	* Creates a priority queue using the specified capacity.
 	* 
 	* @param maxCapacity the integer representation of the max size 
 	* of the circular array queue
 	*/
-	public PriorityQueue(Comparator<E> comparator, int maxCapacity)
+	public PriorityQueue(ComparableTask<E> comparator, int maxCapacity)
 	{
-		
+		this.comparator = comparator;
+		this.maxCapacity = maxCapacity;
 	}
 
 	/**

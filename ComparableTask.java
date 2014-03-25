@@ -18,7 +18,7 @@
  *
  * @author Alejandro Puente
  */
-public class ComparableTask implements Comparator<Task>
+public class ComparableTask<E> implements Comparator<Task>
 {
 	/**
 	* Creates an empty ComparableTask. No private fields are needed
