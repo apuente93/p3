@@ -1,4 +1,23 @@
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Main Class File:  RealTimeScheduler.java
+// File:             CircularQueue.java
+// Semester:         CS302 Spring 2014
+//
+// Author:           Alejandro Puente
+// Email:            apuente@wisc.edu
+// CS Login:         alejandr
+// Lecturer's Name:  Jim Skrentny
+// Lab Section:      Lecture 1
+//////////////////////////// 80 columns wide //////////////////////////////////
 
+/**
+ * The CircularQueue class that represents a circular ArrayList queue
+ *
+ * <p>Bugs: None
+*
+* @author Alejandro Puente
+*/
 public class CircularQueue<E> implements QueueADT<E>
 {
 	//Initial array size
@@ -19,10 +38,19 @@ public class CircularQueue<E> implements QueueADT<E>
 	public CircularQueue() 
 	{
 		items = (E[])(new Object[INITSIZE]);
-	    numItems = 0;
-	    rearIndex = 0;
-	    frontIndex = 0;
+		frontIndex = rearIndex = numItems = 0;
 	}  
+	
+	/**
+	* Creates an empty queue using the specified capacity.
+	* 
+	* @param maxCapacity the integer representation of the max size 
+	* of the circular array queue
+	*/
+	public CircularQueue(int maxCapacity) {
+		items = (E[])(new Object[maxCapacity]);
+		frontIndex = rearIndex = numItems = 0;
+	}
 	
 	/**
 	* Checks if the queue is empty.
