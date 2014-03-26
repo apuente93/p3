@@ -1,5 +1,3 @@
-import java.util.Comparator;
-
 ///////////////////////////////////////////////////////////////////////////////
 //                   ALL STUDENTS COMPLETE THESE SECTIONS
 // Main Class File:  RealTimeScheduler.java
@@ -25,58 +23,82 @@ public class PriorityQueue<E> implements QueueADT<E>
 {   
 	//Variable that holds the ComparableTask object that is used to prioritize
 	//tasks
-	private ComparableTask<E> comparator;
-	//Variable that holds the max capacity of the priority queue
-	private int maxCapacity;
+	private Comparator<E> comparator;
+	//The items in the priority queue
+	private E[] items;
+	//The number of items in the queue
+	private int numItems;
+	
 	/**
 	* Creates a priority queue using the specified capacity.
 	* 
 	* @param maxCapacity the integer representation of the max size 
 	* of the circular array queue
 	*/
-	public PriorityQueue(ComparableTask<E> comparator, int maxCapacity)
+	public PriorityQueue(Comparator<E> comparator, int maxCapacity)
 	{
 		this.comparator = comparator;
-		this.maxCapacity = maxCapacity;
+		items = (E[])(new Object[maxCapacity + 1]);
 	}
 
 	/**
-	* Checks if the queue is empty.
-	* @return true if the queue is empty; otherwise false
+	* Checks if the priority queue is empty.
+	* @return true if the priority queue is empty; otherwise false
 	*/
 	public boolean isEmpty() 
 	{
-		return false;
+		return numItems == 0;
 	}
 
 	/**
-	* Checks if the queue is full.
-	* @return true if the queue is full; otherwise false
+	* Checks if the priority queue is full.
+	* @return true if the priority queue is full; otherwise false
 	*/
 	public boolean isFull() 
 	{
-		return false;
+		return items.length == numItems;
 	}
 
 	/**
-	* Returns the front item of the queue without removing it.
-	* @return the front item of the queue
+	* Returns the item with the highest priority of the queue
+	* @return the item with the highest priority of the queue
 	* @throws EmptyQueueException
 	*/
 	public E peek() throws EmptyQueueException 
 	{
-		return null;
+		if (this.isEmpty())
+		{
+			throw new EmptyQueueException();
+		}
+		else
+		{
+			return items[1];
+		}
 	}
 
 	/**
-	* Removes and returns the front item of the queue.
+	* Removes and returns the front item of the queue. Then reorders the heap.
 	* 
 	* @return the first item in the queue
 	* @throws EmptyQueueException if the queue is empty
 	*/
 	public E dequeue() throws EmptyQueueException 
 	{
-		return null;
+		if (this.isEmpty())
+		{
+			throw new EmptyQueueException();
+		}
+		else
+		{
+			E priority = items[1];
+			items[1] = items[items.length - 1];
+			items[items.length - 1] = null;
+			
+			heapifyDown(1);
+			numItems--;
+			
+			return priority;
+		}
 	}
 
 	/**
@@ -87,7 +109,16 @@ public class PriorityQueue<E> implements QueueADT<E>
 	*/
 	public void enqueue(E item) throws FullQueueException 
 	{
-		
+		if (this.isFull()) 
+	    {
+	        throw new FullQueueException();
+	    }
+		else
+		{
+			items[numItems + 1] = item;
+			numItems++;
+			heapifyUp(numItems);
+		}
 	}
 
 	/**
@@ -97,7 +128,7 @@ public class PriorityQueue<E> implements QueueADT<E>
 	*/
 	public int capacity() 
 	{
-		return 0;
+		return items.length;
 	}
 
 	/**
@@ -107,7 +138,7 @@ public class PriorityQueue<E> implements QueueADT<E>
 	*/
 	public int size() 
 	{
-		return 0;
+		return numItems;
 	}
 	
 	/**
@@ -117,7 +148,71 @@ public class PriorityQueue<E> implements QueueADT<E>
 	*/
 	public String toString()
 	{
-		return null;
+		String priorityQueue = "";
+		for (int i = 1; i < numItems + 1; i++)
+		{
+			priorityQueue = priorityQueue + items[i].toString() + " ";
+		}
+		return priorityQueue;
+	}
+	
+	/**
+	* Method that orders the priority queue from top to bottom
+	* 
+	* @param root the  position of the root of the priority queue
+	*/
+	private void heapifyDown(int root)
+	{
+		E rootItem = items[root];
+		int leftChild = root * 2;
+		int rightChild = leftChild + 1; 
+		
+		if (this.comparator.compare(items[leftChild], items[rightChild]) == -1)
+		{
+			items[root] = items[leftChild];
+			items[leftChild] = rootItem;
+			heapifyDown(leftChild);
+		}
+		else if (this.comparator.compare(items[leftChild], items[rightChild]) == 1)
+		{
+			items[root] = items[rightChild];
+			items[rightChild] = rootItem;
+			heapifyDown(rightChild);
+		}
+		else
+		{
+			items[root] = items[leftChild];
+			items[leftChild] = rootItem;
+			heapifyDown(leftChild);
+		}
+	}
+	
+	/**
+	* Method that orders the priority queue from bottom to top
+	* 
+	* @param rightMostLead the position of the last element in the queue
+	*/
+	private void heapifyUp(int rightMostLeaf)
+	{
+		E rootItem = items[rightMostLeaf];
+		int parent = (rightMostLeaf - 1) / 2;
+		
+		if (parent == 0)
+		{
+			return;
+		}
+		
+		if (this.comparator.compare(items[rightMostLeaf], items[parent]) == -1)
+		{
+			items[rightMostLeaf] = items[parent];
+			items[parent] = rootItem;
+			heapifyUp(parent);
+		}
+		else
+		{
+			return;
+		}
+		
 	}
 
 }

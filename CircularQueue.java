@@ -58,14 +58,7 @@ public class CircularQueue<E> implements QueueADT<E>
 	*/
 	public boolean isEmpty() 
 	{
-		if (numItems == 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return numItems == 0;
 	}
 
 	/**
@@ -74,14 +67,7 @@ public class CircularQueue<E> implements QueueADT<E>
 	*/
 	public boolean isFull() 
 	{
-		if (items.length == numItems)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return items.length == numItems;
 	}
 
 	/**
@@ -132,7 +118,6 @@ public class CircularQueue<E> implements QueueADT<E>
 	*/
 	public void enqueue(E item) throws FullQueueException 
 	{
-		//Check for full array and expand if necessary
 	    if (this.isFull()) 
 	    {
 	        throw new FullQueueException();
@@ -176,13 +161,13 @@ public class CircularQueue<E> implements QueueADT<E>
 		String queue = "";
 		for (int i = frontIndex; i < items.length; i++)
 		{
-			queue += items[i] + " ";
+			queue += items[i].toString() + " ";
 		}
 		if (frontIndex != 0)
 		{
 			for (int i = 0; i < rearIndex; i++)
 			{
-				queue += items[i] + " ";
+				queue += items[i].toString() + " ";
 			}
 		}
 		return queue;

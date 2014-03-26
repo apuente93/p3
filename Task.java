@@ -1,4 +1,3 @@
-
 public class Task extends Process{
 	private int deadline;
 	private int progress;
@@ -31,10 +30,11 @@ public class Task extends Process{
 	}
 	
 	public boolean missedDeadline(int time){
-		return deadline <= time;
+		return deadline - 1 <= time;
 	}
   
   public String toString(){
     return "(deadline: "+deadline+", progress: "+progress+"/"+compute_time+")";
   }
 }
+
