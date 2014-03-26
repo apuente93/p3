@@ -2,7 +2,7 @@
 //                   ALL STUDENTS COMPLETE THESE SECTIONS
 // Main Class File:  RealTimeScheduler.java
 // File:             PriorityQueue.java
-// Semester:         CS302 Spring 2014
+// Semester:         CS367 Spring 2014
 //
 // Author:           Alejandro Puente
 // Email:            apuente@wisc.edu
@@ -190,7 +190,7 @@ public class PriorityQueue<E> implements QueueADT<E>
 	/**
 	* Method that orders the priority queue from bottom to top
 	* 
-	* @param rightMostLead the position of the last element in the queue
+	* @param rightMostLeaf the position of the last element in the queue
 	*/
 	private void heapifyUp(int rightMostLeaf)
 	{

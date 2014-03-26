@@ -2,7 +2,7 @@
 //                   ALL STUDENTS COMPLETE THESE SECTIONS
 // Main Class File:  RealTimeScheduler.java
 // File:             CircularQueue.java
-// Semester:         CS302 Spring 2014
+// Semester:         CS367 Spring 2014
 //
 // Author:           Alejandro Puente
 // Email:            apuente@wisc.edu
@@ -12,9 +12,9 @@
 //////////////////////////// 80 columns wide //////////////////////////////////
 
 /**
- * The CircularQueue class that represents a circular ArrayList queue
- *
- * <p>Bugs: None
+* The CircularQueue class that represents a circular ArrayList queue
+*
+* <p>Bugs: None
 *
 * @author Alejandro Puente
 */
@@ -104,7 +104,7 @@ public class CircularQueue<E> implements QueueADT<E>
 			E itemHolder = items[frontIndex];
 			items[frontIndex] = null;
 			//Use auxiliary method to increment front index with wraparound
-			frontIndex = incrementIndex(frontIndex);
+			frontIndex = (frontIndex + 1) % items.length;
 			numItems--;
 			return itemHolder;
 		}
@@ -122,13 +122,14 @@ public class CircularQueue<E> implements QueueADT<E>
 	    {
 	        throw new FullQueueException();
 	    }
-
-	    //Use auxiliary method to increment rear index with wraparound
-	    rearIndex = incrementIndex(rearIndex);
-
-	    //Insert new item at rear of queue
-	    items[rearIndex] = item;
-	    numItems++;
+	    else
+	    {
+	    	items[rearIndex] = item;
+	    	//Use auxiliary method to increment rear index with wraparound
+	    	rearIndex = (rearIndex + 1) % items.length;
+	    	numItems++;
+	    }
+	    
 	}
 
 	/**
@@ -159,29 +160,54 @@ public class CircularQueue<E> implements QueueADT<E>
 	public String toString()
 	{
 		String queue = "";
-		for (int i = frontIndex; i < items.length; i++)
+		for (int i = 0; i < items.length; i++)
 		{
-			queue += items[i].toString() + " ";
-		}
-		if (frontIndex != 0)
-		{
-			for (int i = 0; i < rearIndex; i++)
-			{
-				queue += items[i].toString() + " ";
-			}
+			queue += "[" + items[i] + "]";
 		}
 		return queue;
 	}
-
-	private int incrementIndex(int index) 
+	
+	/*
+	///////////////////////////////TESTING BOX ////////////////////////////////
+	public static void main (String[] args)
 	{
-	    if (index == items.length-1) 
-	    {
-	        return 0;
-	    }
-	    else 
-	    {
-	        return index + 1;
-	    }
-	}
+		CircularQueue<Integer> circularQueue = new CircularQueue<Integer>(5);
+
+		try
+		{
+			
+			System.out.println("Initial Queue = " + circularQueue.toString());
+			System.out.println("Front Index = " + circularQueue.frontIndex);
+			System.out.println("Rear Index = " + circularQueue.rearIndex);
+			circularQueue.enqueue(1);
+			circularQueue.enqueue(2);
+			circularQueue.enqueue(3);
+			circularQueue.enqueue(4);
+			circularQueue.enqueue(5);
+			System.out.println("Initial Queue enqueue(3) = " + circularQueue.toString());
+			System.out.println("Front Index = " + circularQueue.frontIndex);
+			System.out.println("Rear Index = " + circularQueue.rearIndex);
+			circularQueue.dequeue();
+			circularQueue.dequeue();
+			circularQueue.dequeue();
+			System.out.println("After dequeue(3) Queue = " + circularQueue.toString());
+			System.out.println("Front Index = " + circularQueue.frontIndex);
+			System.out.println("Rear Index = " + circularQueue.rearIndex);
+			circularQueue.enqueue(900);
+			circularQueue.enqueue(901);
+			circularQueue.enqueue(902);
+			System.out.println("After enqueue(3) Queue = " + circularQueue.toString());
+			System.out.println("Front Index = " + circularQueue.frontIndex);
+			System.out.println("Rear Index = " + circularQueue.rearIndex);
+		}
+		catch(FullQueueException e)
+		{
+			System.out.println("Queue is Full");
+		}
+		catch(EmptyQueueException e2)
+		{
+			System.out.println("Queue is Empty");
+		}
+
+	} */
 }

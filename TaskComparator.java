@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                   ALL STUDENTS COMPLETE THESE SECTIONS
-// Main Class File:  ProcessGenerator.java
-// File:             ComparableTask.java
-// Semester:         CS302 Spring 2014
+// Main Class File:  RealTimeScheduler.java
+// File:             TaskComparator.java
+// Semester:         CS367 Spring 2014
 //
 // Author:           Alejandro Puente
 // Email:            apuente@wisc.edu
@@ -12,7 +12,7 @@
 //////////////////////////// 80 columns wide //////////////////////////////////
 
 /**
- * The ComparableTask class that compares two given tasks to prioritize
+ * The TaskComparator class that compares two given tasks to prioritize
  *
  * <p>Bugs: None
  *
@@ -21,7 +21,7 @@
 public class TaskComparator<E> implements Comparator<Task>
 {
 	/**
-	* Creates an empty ComparableTask. No private fields are needed
+	* Creates an empty TaskComparator. No private fields are needed
 	*/
 	public TaskComparator ()
 	{
