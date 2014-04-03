@@ -10,6 +10,7 @@
 // Lecturer's Name:  Jim Skrentny
 // Lab Section:      Lecture 1
 //////////////////////////// 80 columns wide //////////////////////////////////
+import java.util.Comparator;
 
 /**
  * The PriorityQueue class that represents a priority queue implemented as an
@@ -39,6 +40,7 @@ public class PriorityQueue<E> implements QueueADT<E>
 	{
 		this.comparator = comparator;
 		items = (E[])(new Object[maxCapacity + 1]);
+		numItems = 0;
 	}
 
 	/**
@@ -90,12 +92,13 @@ public class PriorityQueue<E> implements QueueADT<E>
 		}
 		else
 		{
+			//Variable used to hold the front item
 			E priority = items[1];
-			items[1] = items[items.length - 1];
-			items[items.length - 1] = null;
+			items[1] = items[numItems];
+			items[numItems] = null;
 			
-			heapifyDown(1);
 			numItems--;
+			heapifyDown(1);
 			
 			return priority;
 		}
@@ -163,56 +166,65 @@ public class PriorityQueue<E> implements QueueADT<E>
 	*/
 	private void heapifyDown(int root)
 	{
-		E rootItem = items[root];
-		int leftChild = root * 2;
-		int rightChild = leftChild + 1; 
-		
-		if (this.comparator.compare(items[leftChild], items[rightChild]) == -1)
-		{
-			items[root] = items[leftChild];
-			items[leftChild] = rootItem;
-			heapifyDown(leftChild);
-		}
-		else if (this.comparator.compare(items[leftChild], items[rightChild]) == 1)
-		{
-			items[root] = items[rightChild];
-			items[rightChild] = rootItem;
-			heapifyDown(rightChild);
-		}
-		else
-		{
-			items[root] = items[leftChild];
-			items[leftChild] = rootItem;
-			heapifyDown(leftChild);
-		}
+        if (2 * root > numItems)
+        {
+            return;
+        }
+        
+        //The left child of the heap
+        int leftChild = 2 * root;
+        //The right child of the heap
+        int rightChild = leftChild + 1;
+        //Variable used to determine the highest priority
+        int higherPriority;
+        
+        if(rightChild > numItems)
+        {
+            higherPriority = leftChild;
+        }
+        
+        else
+        {
+            higherPriority = comparator.compare(items[leftChild], items[rightChild]) < 0
+            ? leftChild : rightChild;
+        }
+        
+        if(comparator.compare(items[higherPriority], items[root]) < 0)
+        {
+        	if(root < 0 || root > numItems
+            || higherPriority < 0 || higherPriority > numItems)
+        	{
+        		throw new IndexOutOfBoundsException();
+        	}
+        	//A holder for swapping
+        	E holdValueIndex1 = items[root];
+	        items[root] = items[higherPriority];
+            items[higherPriority] = holdValueIndex1;
+            heapifyDown(higherPriority);
+        }
 	}
 	
-	/**
-	* Method that orders the priority queue from bottom to top
-	* 
-	* @param rightMostLeaf the position of the last element in the queue
-	*/
-	private void heapifyUp(int rightMostLeaf)
-	{
-		E rootItem = items[rightMostLeaf];
-		int parent = (rightMostLeaf - 1) / 2;
-		
-		if (parent == 0)
-		{
-			return;
-		}
-		
-		if (this.comparator.compare(items[rightMostLeaf], items[parent]) == -1)
-		{
-			items[rightMostLeaf] = items[parent];
-			items[parent] = rootItem;
-			heapifyUp(parent);
-		}
-		else
-		{
-			return;
-		}
-		
-	}
-
+	 private void heapifyUp(int rightMostLeaf)
+	    {
+		 	//The parent of the rightMostLeaf
+		    int parent = rightMostLeaf / 2;
+	        if(rightMostLeaf <= 1)
+	        {
+	            return;
+	        }
+	        if(comparator.compare(items[rightMostLeaf], items[parent]) < 0)
+	        {
+	        	if(rightMostLeaf < 0 || rightMostLeaf > numItems
+	        			|| parent < 0 || parent > numItems)
+	        	{
+	        		throw new IndexOutOfBoundsException();
+	        	}
+	        	//A holder for swapping
+	        	E holdValueIndex1 = items[rightMostLeaf];
+		        items[rightMostLeaf] = items[parent];
+                items[parent] = holdValueIndex1;
+	            heapifyUp(parent);
+	            heapifyDown(rightMostLeaf);
+	        }
+	    }
 }

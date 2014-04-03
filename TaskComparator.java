@@ -10,7 +10,7 @@
 // Lecturer's Name:  Jim Skrentny
 // Lab Section:      Lecture 1
 //////////////////////////// 80 columns wide //////////////////////////////////
-
+import java.util.Comparator;
 /**
  * The TaskComparator class that compares two given tasks to prioritize
  *
@@ -20,14 +20,6 @@
  */
 public class TaskComparator<E> implements Comparator<Task>
 {
-	/**
-	* Creates an empty TaskComparator. No private fields are needed
-	*/
-	public TaskComparator ()
-	{
-		
-	}
-
 	/**
 	* Compares Task priorities
 	* @param e1 the first task you want to compare
@@ -51,4 +43,12 @@ public class TaskComparator<E> implements Comparator<Task>
 		}
 	}
 	
+	/**
+	* Not needed
+	* @throws UnsupportedOperationException Unsupported operation.
+	*/
+	public boolean equals(Object o)
+	{
+		throw new UnsupportedOperationException();
+	}
 }

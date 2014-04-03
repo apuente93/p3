@@ -10,6 +10,7 @@
 // Lecturer's Name:  Jim Skrentny
 // Lab Section:      Lecture 1
 //////////////////////////// 80 columns wide //////////////////////////////////
+
 import java.util.ArrayList;
 
 /**
